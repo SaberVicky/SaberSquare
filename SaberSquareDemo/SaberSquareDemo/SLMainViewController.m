@@ -33,7 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self setupGameViewWithColumns:kColumns andRows:kRows andFrame:CGRectMake([UIScreen mainScreen].bounds.size.width / 2 - kBgWidth / 2, [UIScreen mainScreen].bounds.size.height / 2 - kBgHeight / 2, kBgWidth, kBgHeight)];
@@ -47,7 +47,7 @@
 #pragma mark - Private Method
 //创建背景网格图
 - (void)setupGameViewWithColumns:(NSInteger)column andRows:(NSInteger)row andFrame:(CGRect)frame {
-   
+    
     UIView *bgView = [[UIView alloc] initWithFrame:frame];
     bgView.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:bgView];
@@ -71,9 +71,9 @@
     
     int randomNumber = arc4random() % 6;
     SLBaseSquare *square = [[SLBaseSquare alloc] init];
-
+    
     square = [[SLSquareO alloc] initWithStartIndex:kStartIndex];
-
+    
     switch (randomNumber) {
         case 0:
             square = [[SLSquareO alloc] initWithStartIndex:kStartIndex];
@@ -102,7 +102,7 @@
         default:
             break;
     }
-
+    
     self.currentSquare = square;
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(squareMove) userInfo:nil repeats:YES];
@@ -112,8 +112,8 @@
 
 //每次的移动
 - (void)squareMove {
-
-    if (_timerCount == self.currentSquare.maxSteps ) {
+    
+    if (_timerCount == self.currentSquare.maxSteps) {
         [self checkClearSquare];
         [self.timer invalidate];
         [self randomSquare];
@@ -122,14 +122,14 @@
         [self.timer invalidate];
         [self randomSquare];
     }
-
+    
     
     for (int i = 0; i < _currentSquare.indexArray.count; i++) {
         UIView *square = [self.view viewWithTag:[_currentSquare.indexArray[i] intValue]];
         _currentSquare.indexArray[i] = @([_currentSquare.indexArray[i] intValue] + 10);
         square.hidden = YES;
     }
-
+    
     for (int i = 0; i < _currentSquare.indexArray.count; i++) {
         UIView *square = [self.view viewWithTag:[_currentSquare.indexArray[i] intValue]];
         square.hidden = NO;
@@ -144,7 +144,7 @@
     for (int i = 0; i < _currentSquare.checkBottomArray.count; i++) {
         UIView *checkView = [self.view viewWithTag:[_currentSquare.indexArray[[_currentSquare.checkBottomArray[i] intValue]] intValue] + 10];
         if (!checkView.hidden) {
-           return YES;
+            return YES;
         }
     }
     
@@ -155,52 +155,52 @@
 //    NSSet *allTouches = [event allTouches];    //返回与当前接收者有关的所有的触摸对象
 //    UITouch *touch = [allTouches anyObject];   //视图中的所有对象
 //    CGPoint point = [touch locationInView:[touch view]]; //返回触摸点在视图中的当前坐标
-// 
-//    
+//
+//
 //    CGFloat left = 500;
 //    CGFloat top = 500;
 //    CGFloat bottom = 0;
 //    CGFloat right = 0;
-//    
+//
 //    for (int i = 0; i < _currentIndexArray.count; i++) {
 //        UIView *squareView = [self.view viewWithTag:[_currentIndexArray[i] intValue]];
 //        if (CGRectGetMinX(squareView.frame) < left) {
 //            left = CGRectGetMinX(squareView.frame);
 //        }
-//        
+//
 //        if (CGRectGetMinY(squareView.frame) < top) {
 //            top = CGRectGetMinY(squareView.frame);
 //        }
-//        
+//
 //        if (CGRectGetMaxX(squareView.frame) > right) {
 //            right = CGRectGetMaxX(squareView.frame);
 //        }
-//        
+//
 //        if (CGRectGetMaxY(squareView.frame) > bottom) {
 //            bottom = CGRectGetMaxY(squareView.frame);
 //        }
 //    }
-//    
+//
 //    left = left + [UIScreen mainScreen].bounds.size.width / 2 - kBgWidth / 2;
 //    right = right + [UIScreen mainScreen].bounds.size.width / 2 - kBgWidth / 2;
 //    top = top + [UIScreen mainScreen].bounds.size.height / 2 - kBgHeight / 2;
 //    bottom = bottom + [UIScreen mainScreen].bounds.size.height / 2 - kBgHeight / 2;
-//    
+//
 ////    //变形
 ////    if (point.y < top) {
 ////        [self changeSquare];
 ////    }
-////    
+////
 ////    //下降
 ////    if (point.y > bottom) {
 ////        [self moveDown];
 ////    }
-//    
+//
 //    //左移
 //    if (point.x < left) {
 //        [self moveLeft];
 //    }
-//    
+//
 //    //右移
 //    if (point.x > right) {
 //        [self moveRight];
@@ -210,12 +210,12 @@
 - (void)setupLeftRightButton {
     UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height / 2 + kBgHeight / 2, [UIScreen mainScreen].bounds.size.width / 2, [UIScreen mainScreen].bounds.size.height / 2 - kBgHeight / 2)];
     [leftButton addTarget:self action:@selector(moveLeft) forControlEvents:UIControlEventTouchUpInside];
-//    leftButton.backgroundColor = [UIColor redColor];
+    //    leftButton.backgroundColor = [UIColor redColor];
     [self.view addSubview:leftButton];
     
     UIButton *rightButton = [[UIButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width / 2, [UIScreen mainScreen].bounds.size.height / 2 + kBgHeight / 2, [UIScreen mainScreen].bounds.size.width / 2, [UIScreen mainScreen].bounds.size.height / 2 - kBgHeight / 2)];
     [rightButton addTarget:self action:@selector(moveRight) forControlEvents:UIControlEventTouchUpInside];
-//    rightButton.backgroundColor = [UIColor greenColor];
+    //    rightButton.backgroundColor = [UIColor greenColor];
     [self.view addSubview:rightButton];
 }
 
@@ -295,6 +295,7 @@
     }
 }
 
+//检测是否达到消除条件
 - (void)checkClearSquare {
     for (int i = 0; i < kRows; i++) {
         
@@ -313,6 +314,27 @@
                 UIView *square = [self.view viewWithTag:i * kColumns + j + 1];
                 square.hidden = YES;
             }
+            
+            [self moveDownAfterClearWithRow:i];
+            
+        }
+    }
+}
+
+//消除后其他行下降
+- (void)moveDownAfterClearWithRow:(int)row {
+    for (int k = row - 1; k >= 0; k --) {
+        for (int j = 0; j < kColumns; j++) {
+            UIView *square = [self.view viewWithTag:k * kColumns + j + 1];
+            if (!square.hidden) {
+                UIView *square = [self.view viewWithTag:(k + 1) * kColumns + j + 1];
+                square.hidden = NO;
+            }
+        }
+        
+        for (int j = 0; j < kColumns; j++) {
+            UIView *square = [self.view viewWithTag:k * kColumns + j + 1];
+            square.hidden = YES;
         }
     }
 }

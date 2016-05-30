@@ -39,6 +39,5 @@
         self.checkRightArray = @[@0, @1, @2, @3];
         self.currentSquareType = 0;
     }
-    
 }
 @end

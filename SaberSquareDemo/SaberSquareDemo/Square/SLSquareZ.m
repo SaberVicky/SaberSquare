@@ -33,8 +33,8 @@
         self.indexArray = @[@(startIndex + 1), @(startIndex + 11), @(startIndex + 10),  @(startIndex + 20)].mutableCopy;
         self.maxSteps = 17;
         self.checkBottomArray = @[@1, @3];
-        self.checkLeftArray = @[@0, @1, @3];
-        self.checkRightArray = @[@0, @2, @3];
+        self.checkLeftArray = @[@0, @2, @3];
+        self.checkRightArray = @[@0, @1, @3];
         self.currentSquareType = 0;
     }
 }
