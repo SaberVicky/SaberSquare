@@ -10,7 +10,6 @@
 
 @interface SLBaseSquare : NSObject
 
-
 @property (nonatomic, strong) NSMutableArray *indexArray;
 
 @property (nonatomic, assign) NSInteger maxSteps;

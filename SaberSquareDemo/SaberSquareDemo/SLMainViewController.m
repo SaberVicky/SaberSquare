@@ -27,6 +27,9 @@
 @property (nonatomic, assign) NSInteger timerCount;
 @property (nonatomic, strong) SLBaseSquare *currentSquare;
 
+@property (nonatomic, assign) NSInteger score;
+@property (nonatomic, strong) UILabel *scoreLabel;
+
 @end
 
 @implementation SLMainViewController
@@ -36,15 +39,23 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self setupGameViewWithColumns:kColumns andRows:kRows andFrame:CGRectMake([UIScreen mainScreen].bounds.size.width / 2 - kBgWidth / 2, [UIScreen mainScreen].bounds.size.height / 2 - kBgHeight / 2, kBgWidth, kBgHeight)];
+    [self setupUI];
     [self setupSwipe];
     [self setupLeftRightButton];
     [self randomSquare];
 }
 
-
-
 #pragma mark - Private Method
+
+- (void)setupUI {
+    [self setupGameViewWithColumns:kColumns andRows:kRows andFrame:CGRectMake([UIScreen mainScreen].bounds.size.width / 2 - kBgWidth / 2, [UIScreen mainScreen].bounds.size.height / 2 - kBgHeight / 2, kBgWidth, kBgHeight)];
+    
+    _scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, 20)];
+    _scoreLabel.textAlignment = NSTextAlignmentCenter;
+    _scoreLabel.textColor = [UIColor redColor];
+    _scoreLabel.text = [NSString stringWithFormat:@"%zd分", _score];
+    [self.view addSubview:_scoreLabel];
+}
 //创建背景网格图
 - (void)setupGameViewWithColumns:(NSInteger)column andRows:(NSInteger)row andFrame:(CGRect)frame {
     
@@ -233,6 +244,13 @@
 - (void)moveLeft {
     NSLog(@"左");
     
+    for (int i = 0; i < _currentSquare.indexArray.count; i++) {
+        NSInteger index = [_currentSquare.indexArray[i] integerValue];
+        if (index % 10 == 1) {
+            return;
+        }
+    }
+    
     for (int i = 0; i < _currentSquare.checkLeftArray.count; i++) {
         UIView *checkView = [self.view viewWithTag:[_currentSquare.indexArray[[_currentSquare.checkLeftArray[i] intValue]] intValue] - 1];
         if (!checkView.hidden) {
@@ -254,6 +272,13 @@
 
 - (void)moveRight {
     NSLog(@"右");
+    
+    for (int i = 0; i < _currentSquare.indexArray.count; i++) {
+        NSInteger index = [_currentSquare.indexArray[i] integerValue];
+        if (index % 10 == 0) {
+            return;
+        }
+    }
     
     for (int i = 0; i < _currentSquare.checkRightArray.count; i++) {
         UIView *checkView = [self.view viewWithTag:[_currentSquare.indexArray[[_currentSquare.checkRightArray[i] intValue]] intValue] + 1];
@@ -310,6 +335,7 @@
         }
         
         if (clear) {
+            [self scoreIncrease];
             for (int j = 0; j < kColumns; j++) {
                 UIView *square = [self.view viewWithTag:i * kColumns + j + 1];
                 square.hidden = YES;
@@ -329,6 +355,7 @@
             if (!square.hidden) {
                 UIView *square = [self.view viewWithTag:(k + 1) * kColumns + j + 1];
                 square.hidden = NO;
+
             }
         }
         
@@ -337,6 +364,12 @@
             square.hidden = YES;
         }
     }
+}
+
+//加分
+- (void)scoreIncrease {
+    _score++;
+    _scoreLabel.text = [NSString stringWithFormat:@"%zd分", _score];
 }
 
 @end
